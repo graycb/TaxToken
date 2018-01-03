@@ -61,14 +61,14 @@ public class UserController {
 		
 		
 		if(check){
-			status += "Name: " + user.getName() + "|";
-			status += " Birthday: " + user.getBirthday() + "|";
+			status += "Name: " + user.getName() + "| ";
+			status += " Birthday: " + user.getBirthday() + "| ";
 			status += " Age: " + user.getAge() + ".";
 			
 			return new ResponseEntity<String>(status, HttpStatus.OK);
 		}
 		else {
-			status = "Error the user did not exist!";
+			status = "Error! The user could not be updated because there are null values in the user attributes!";
 			return new ResponseEntity<String>(status, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -82,14 +82,14 @@ public class UserController {
 		Boolean check = UserService.updateNewUser(name, user);
 		
 		if(check) {
-			status += "Name: " + user.getName() + "|";
-			status += " Birthday: " + user.getBirthday() + "|";
+			status += "Name: " + user.getName() + "| ";
+			status += " Birthday: " + user.getBirthday() + "| ";
 			status += " Age: " + user.getAge() + ".";
 			
 			return new ResponseEntity<String>(status, HttpStatus.OK);
 		}
 		else {
-			status = "Error the user did not exist!";
+			status = "Error! The user could not be updated because a user with that name does not exist!";
 			return new ResponseEntity<String>(status, HttpStatus.BAD_REQUEST);
 		}
 		
