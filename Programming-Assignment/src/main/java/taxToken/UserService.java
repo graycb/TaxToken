@@ -40,9 +40,15 @@ public class UserService {
 		
 		if(user.getName() != null && user.getBirthday() != null && user.getAge() != 0) {
 
+			for(String nm : userMap.keySet()) {
+				if(nm.equals(user.getName())) {
+					return check;
+				}
+			}
 			userMap.put(user.getName(), user);
 			check = true;
 		}
+		
 		
 		return check;
 		
