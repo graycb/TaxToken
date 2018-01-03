@@ -61,8 +61,8 @@ public class UserController {
 		
 		
 		if(check){
-			status += "Name: " + user.getName() + "| ";
-			status += " Birthday: " + user.getBirthday() + "| ";
+			status += "Name: " + user.getName() + " | ";
+			status += " Birthday: " + user.getBirthday() + " | ";
 			status += " Age: " + user.getAge() + ".";
 			
 			return new ResponseEntity<String>(status, HttpStatus.OK);
@@ -82,8 +82,8 @@ public class UserController {
 		Boolean check = UserService.updateNewUser(name, user);
 		
 		if(check) {
-			status += "Name: " + user.getName() + "| ";
-			status += " Birthday: " + user.getBirthday() + "| ";
+			status += "Name: " + user.getName() + " | ";
+			status += " Birthday: " + user.getBirthday() + " | ";
 			status += " Age: " + user.getAge() + ".";
 			
 			return new ResponseEntity<String>(status, HttpStatus.OK);
