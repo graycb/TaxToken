@@ -15,82 +15,67 @@ public class UserController {
 	
 	
 	@RequestMapping("/{name}/birthday") 
-	public String getBirthday(@PathVariable String name) {
+	public ResponseEntity<String> getBirthday(@PathVariable String name) {
 		
 		String birthday = "No results found";
-		
 		
 		// Get's the user's birthday based on name
 		birthday = UserService.returnBirthday(name, birthday);
 		
-		
-		// If no name matches the get request will return no results found
 		if(birthday.equals("No results found")) {
-			return birthday;
+			return new ResponseEntity<String>(birthday, HttpStatus.NOT_FOUND);
 		}
 		
 		// Returns the user's name birthday and age
-		return name + "'s birthday is " + birthday + ".";
+	    return new ResponseEntity<String>(birthday, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping("/{name}/age") 
-	public String getAge(@PathVariable String name) {
+	public ResponseEntity<Integer> getAge(@PathVariable String name) {
 		
 		int age = 0;
 		
 		// Get's the user's age based on name
 		age = UserService.returnAge(name, age);
 		
-		// If no name matches the get request will return no results found
 		if(age == 0) {
-			return "No results found";
+			return new ResponseEntity<Integer>(age, HttpStatus.NOT_FOUND);
 		}
 		
-		// Returns the user's name birthday and age
-		return name + "'s age is " + age + ".";
+		// Returns the user's age
+		return new ResponseEntity<Integer>(age, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/user")
-	public ResponseEntity<String> addUser(@RequestBody User user) {
-		String status = "";
+	public ResponseEntity<User> addUser(@RequestBody User user) {
 		
-		// Post request passes a user object using JSON from Postman
+		// Post request passes a user object using JSON from Postman returns a boolean
 		Boolean check = UserService.addNewUser(user);
 		
 		
 		if(check){
-			status += "Name: " + user.getName() + " | ";
-			status += " Birthday: " + user.getBirthday() + " | ";
-			status += " Age: " + user.getAge() + ".";
-			
-			return new ResponseEntity<String>(status, HttpStatus.OK);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 		else {
-			status = "Error! The user could not be updated because there are null values in the user attributes!";
-			return new ResponseEntity<String>(status, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
 		}
 		
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/user/{name}")
-	public ResponseEntity<String> updateUser(@RequestBody User user, @PathVariable String name) {
-		String status = "";
+	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable String name) {
+		
 		
 		// Put request passes a user object and a name using JSON from Postman
 		Boolean check = UserService.updateNewUser(name, user);
 		
 		if(check) {
-			status += "Name: " + user.getName() + " | ";
-			status += " Birthday: " + user.getBirthday() + " | ";
-			status += " Age: " + user.getAge() + ".";
-			
-			return new ResponseEntity<String>(status, HttpStatus.OK);
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 		else {
-			status = "Error! The user could not be updated because a user with that name does not exist!";
-			return new ResponseEntity<String>(status, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
 		}
 		
 		
