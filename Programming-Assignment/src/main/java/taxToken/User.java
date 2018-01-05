@@ -1,10 +1,13 @@
-package taxToken;
+package TaxToken;
 
-//import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
 public class User {
 	
-	// Global variables
+
+	@Id 
 	private String name;
 	private String birthday;
 	private int age;
